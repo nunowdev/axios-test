@@ -19,6 +19,7 @@ function App() {
     setPhotosArr(arrayTest);
     console.log(photosArr);
     //console.log(requestedData.data.results[0].alt_description);
+    //console.log(requestedData.data.results[0].alt_description);
   }
 
   return (
