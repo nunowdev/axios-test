@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Axios from "axios";
+
+// https://api.unsplash.com/search/photos?client_id=S1V-XtrLp6rvngz6YkmCg9tiEFlsZODnssVAEZTHYdU
 
 function App() {
+  const [photosArr, setPhotosArr] = useState([]);
+  const arrayTest = [];
+
+  async function getPhotos() {
+    const searchInput = document.getElementById("searchInput");
+    const requestedData = await Axios.get(
+      `https://api.unsplash.com/search/photos?query=${searchInput.value}&client_id=S1V-XtrLp6rvngz6YkmCg9tiEFlsZODnssVAEZTHYdU&`
+    );
+    for (let i = 0; i < 10; ++i) {
+      arrayTest.push(requestedData.data.results[i].urls.regular);
+    }
+    setPhotosArr(arrayTest);
+    console.log(photosArr);
+    //console.log(requestedData.data.results[0].alt_description);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello World!</h1>
+      <button onClick={getPhotos}>Click here</button>
+      <input id="searchInput" type="text" onInput={getPhotos}></input>
+      <br></br>
+      {photosArr.map((photo) => (
+        <img src={photo} class="searchedimg" alt=""></img>
+      ))}
     </div>
   );
 }
